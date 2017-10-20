@@ -87,14 +87,26 @@ body {
     height: 90px;
     background:#363636;
     width: 100%;
-    line-height: 90px;
     color: #b2b2b2;
-    display: flex;
 }
 .app-head-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 90px;
 }
 .app-head-inner img{
     width: 50px;
+    height: 50px;
+    margin-left: 20px;
+}
+.head-nav{
+    margin-right: 20px;
+}
+.nav-list{
+    display: flex;
+}
+.nav-list li{
+    padding-left: 5px;
 }
 </style>
