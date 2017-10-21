@@ -14,7 +14,11 @@
               </div>
           </div>
       </div>
-      <div class="app-content">content</div>
+      <div class="app-content">
+          <keep-alive>
+              <router-view></router-view>
+          </keep-alive>
+      </div>
       <div class="app-foot">
           <p>2016 fishenal MIT</p>
       </div>
@@ -108,5 +112,13 @@ body {
 }
 .nav-list li{
     padding-left: 5px;
+}
+.app-foot{
+    height: 80px;
+    width: 100%;
+    background: #e3e4e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
