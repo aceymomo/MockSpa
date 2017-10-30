@@ -4,7 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Layout from '@/components/layout'
+import Axios from 'axios'
 
+Vue.prototype.$http = Axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
