@@ -9,7 +9,7 @@
                       <li class="nav-pile">|</li>
                       <li>注册</li>
                       <li class="nav-pile">|</li>
-                      <li>关于</li>
+                      <li @click="openshow">关于</li>
                   </ul>
               </div>
           </div>
@@ -22,13 +22,28 @@
       <div class="app-foot">
           <p>2016 fishenal MIT</p>
       </div>
+      <my-dialog :is-show="isShowDialog" @on-close="closeindex">
+          <p>outher hello</p>
+      </my-dialog>
   </div>
 </template>
 <script>
+import Dialog from '@/components/dailog'
 export default{
     data(){
         return{
-
+            isShowDialog:false
+        }
+    },
+    components:{
+        myDialog:Dialog
+    },
+    methods:{
+        openshow(){
+            this.isShowDialog = true
+        },
+        closeindex(){
+            this.isShowDialog = false
         }
     }
 }

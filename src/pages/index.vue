@@ -60,7 +60,7 @@ export default{
     },
     methods:{
       dosomesing(){
-        console.log('dosomesing run')
+        
       }
     },
     data(){
