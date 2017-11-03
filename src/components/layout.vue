@@ -5,11 +5,11 @@
               <img src="../assets/logo.png" alt="logo">
               <div class="head-nav">
                   <ul class="nav-list">
-                      <li>登录</li>
+                      <li @click="logclick">登录</li>
                       <li class="nav-pile">|</li>
-                      <li>注册</li>
+                      <li @click="regclick">注册</li>
                       <li class="nav-pile">|</li>
-                      <li @click="openshow">关于</li>
+                      <li @click="aboutclick">关于</li>
                   </ul>
               </div>
           </div>
@@ -22,28 +22,49 @@
       <div class="app-foot">
           <p>2016 fishenal MIT</p>
       </div>
-      <my-dialog :is-show="isShowDialog" @on-close="closeindex">
-          <p>outher hello</p>
+      <my-dialog :is-show="isShowAboutDialog" @on-close="closeindex('isShowAboutDialog')">
+                <p>本报告在调研数据的基础上，采用定性与定量相结合的方式深入分析了专车市场发展的驱动因素与阻碍因素、专车市场背后的产业格局、专车企业的竞争格局、用户对专车市场的依赖程度、专车对其他交通工具运力的补充效应等，通过这五个章节的研究反映专车市场的发展态势和面临的问题。报告力求客观、深入、准确地反映中国专车市场发展情况，为政府、企事业单位和社会各界提供决策依据。 </p>
+      </my-dialog>
+      <my-dialog :is-show="isShowLogDialog" @on-close="closeindex('isShowLogDialog')">
+          <log-form @has-log="onSuccess"></log-form>
+      </my-dialog>
+      <my-dialog :is-show="isShowRegDialog" @on-close="closeindex('isShowRegDialog')">
+          <reg-form></reg-form>
       </my-dialog>
   </div>
 </template>
 <script>
 import Dialog from '@/components/dailog'
+import logForm from '@/components/logform'
+import regForm from '@/components/regform'
 export default{
     data(){
         return{
-            isShowDialog:false
+            isShowAboutDialog:false,
+            isShowLogDialog:false,
+            isShowRegDialog:false,
         }
     },
     components:{
-        myDialog:Dialog
+        myDialog:Dialog,
+        logForm,
+        regForm
     },
     methods:{
-        openshow(){
-            this.isShowDialog = true
+        aboutclick(){
+            this.isShowAboutDialog = true
         },
-        closeindex(){
-            this.isShowDialog = false
+        logclick(){
+            this.isShowLogDialog = true
+        },
+        regclick(){
+            this.isShowRegDialog = true
+        },
+        closeindex(attr){
+            this[attr] = false
+        },
+        onSuccess(data){
+            this.name = data.name
         }
     }
 }
@@ -135,5 +156,44 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.button {
+  background: #4fc08d;
+  color: #fff;
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.button:hover {
+  background: #4fc08d;
+}
+.g-form {
+
+}
+.g-form-line {
+  padding: 15px 0;
+}
+.g-form-label {
+  width: 100px;
+  font-size: 16px;
+  display: inline-block;
+}
+.g-form-input {
+  display: inline-block;
+}
+.g-form-input input {
+  height: 30px;
+  width: 200px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+}
+.g-form-btn {
+  padding-left: 100px;
+}
+.g-form-error {
+  color: red;
+  padding-left: 15px;
 }
 </style>
