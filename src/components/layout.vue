@@ -5,10 +5,12 @@
               <img src="../assets/logo.png" alt="logo">
               <div class="head-nav">
                   <ul class="nav-list">
-                      <li @click="logclick">登录</li>
-                      <li class="nav-pile">|</li>
-                      <li @click="regclick">注册</li>
-                      <li class="nav-pile">|</li>
+                      <li>{{username}}</li>
+                      <li v-if="username !== ''" class="nav-pile">|</li>
+                      <li v-if="username === ''" @click="logclick">登录</li>
+                      <li v-if="username === ''" class="nav-pile">|</li>
+                      <li v-if="username === ''" @click="regclick">注册</li>
+                      <li v-if="username === ''" class="nav-pile">|</li>
                       <li @click="aboutclick">关于</li>
                   </ul>
               </div>
@@ -43,6 +45,7 @@ export default{
             isShowAboutDialog:false,
             isShowLogDialog:false,
             isShowRegDialog:false,
+            username:''
         }
     },
     components:{
@@ -64,7 +67,9 @@ export default{
             this[attr] = false
         },
         onSuccess(data){
-            this.name = data.name
+            console.log(data)
+            this.closeindex('isShowLogDialog')
+            this.username = data.username
         }
     }
 }

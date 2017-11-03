@@ -18,5 +18,9 @@ export default Mock.mock('http:/g.cn', {
             title: '广告发布',
             url: 'http://hearstone.com'
         }
-    ]
+    ],
+    'login': {
+        'username': 'yundong',
+        'userid': 123456
+    }
 })

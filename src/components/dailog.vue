@@ -1,11 +1,13 @@
 <template>
   <div>
-      <div class="dialog-wrap" v-if="isShow">
-          <div class="dialog-cover" @click="closed"></div>
-          <div class="dialog-content">
-              <p class="dialog-close" @click="closed">x</p>
-              <slot>empty</slot>
-          </div>
+      <div class="dialog-wrap">
+          <div class="dialog-cover" v-if="isShow" @click="closed"></div>
+          <transition name="drop">
+            <div class="dialog-content" v-if="isShow">
+                <p class="dialog-close" @click="closed">x</p>
+                <slot>empty</slot>
+            </div>
+          </transition>
       </div>
   </div>
 </template>
@@ -30,6 +32,16 @@ export default{
 }
 </script>
 <style scoped>
+.drop-enter-active {
+  transition: all .5s ease;
+}
+.drop-enter {
+  transform: translateY(-500px);
+}
+.drop-leave-active {
+  transition: all .3s ease;
+  transform: translateY(800px);
+}
 .dialog-wrap {
   position: fixed;
   width: 100%;
