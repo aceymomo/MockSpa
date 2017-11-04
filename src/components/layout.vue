@@ -33,7 +33,7 @@
           <log-form @has-log="onSuccess"></log-form>
       </my-dialog>
       <my-dialog :is-show="isShowRegDialog" @on-close="closeindex('isShowRegDialog')">
-          <reg-form></reg-form>
+          <reg-form @reg-hot="onRegSuc"></reg-form>
       </my-dialog>
   </div>
 </template>
@@ -72,6 +72,9 @@ export default{
             console.log(data)
             this.closeindex('isShowLogDialog')
             this.username = data.username
+        },
+        onRegSuc(data){
+            
         },
         logclose(){
             this.username = ''
