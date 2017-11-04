@@ -11,6 +11,8 @@
                       <li v-if="username === ''" class="nav-pile">|</li>
                       <li v-if="username === ''" @click="regclick">注册</li>
                       <li v-if="username === ''" class="nav-pile">|</li>
+                      <li v-if="username !== ''" @click="logclose">退出</li>
+                      <li v-if="username !== ''" class="nav-pile">|</li>
                       <li @click="aboutclick">关于</li>
                   </ul>
               </div>
@@ -70,6 +72,9 @@ export default{
             console.log(data)
             this.closeindex('isShowLogDialog')
             this.username = data.username
+        },
+        logclose(){
+            this.username = ''
         }
     }
 }
@@ -200,5 +205,28 @@ body {
 .g-form-error {
   color: red;
   padding-left: 15px;
+}
+.reg-user{
+    padding: 15px 0;
+}
+.reg-user input{
+    height: 30px;
+    width: 200px;
+    line-height: 30px;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.reg-user button{
+    width: 80px;
+    height: 40px;
+    background: #4fc08d;
+    color:#fff;
+    border:none;
+    margin-left: 100px;
+}
+.reg-mad{
+    display: inline-block;
+    width: 100px;
+    font-size: 16px;
 }
 </style>
