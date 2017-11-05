@@ -2,7 +2,9 @@
   <div>
       <div class="app-head">
           <div class="app-head-inner">
-              <img src="../assets/logo.png" alt="logo">
+              <router-link :to="{path:'/'}">
+                <img src="../assets/logo.png" alt="logo">
+              </router-link>
               <div class="head-nav">
                   <ul class="nav-list">
                       <li>{{username}}</li>
@@ -74,7 +76,11 @@ export default{
             this.username = data.username
         },
         onRegSuc(data){
-            
+            this.onRs = setTimeout(()=>{
+                this.closeindex('isShowRegDialog')
+                this.username = data.username
+                this.$router.push({path:'/'})
+            },5000)
         },
         logclose(){
             this.username = ''
@@ -231,5 +237,17 @@ body {
     display: inline-block;
     width: 100px;
     font-size: 16px;
+}
+.reg-suc{
+    display: flex;
+    justify-content: center;
+}
+.reg-suc p{
+    font-size: 24px;
+    color:#4fc08d;
+}
+.reg-suc span{
+    font-size: 18px;
+    color:#000;
 }
 </style>

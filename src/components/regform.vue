@@ -20,7 +20,7 @@
       </div>
       <p>{{errorText}}</p>
       <div class="reg-suc" v-if="!regsucin">
-          <p>恭喜你</p>
+          <p>恭喜你注册成功！<span>5秒后跳转至首页...</span></p>
       </div>
   </div>
 </template>
