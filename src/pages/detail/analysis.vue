@@ -17,6 +17,7 @@
                   产品类型：
               </div>
               <div class="sales-board-line-right">
+                <v-selection :selections="productType"></v-selection>
               </div>
           </div>
           <div class="sales-board-line">
@@ -75,8 +76,29 @@
   </div>
 </template>
 <script>
+import vSelection from '@/components/selection'
 export default{
-
+    components:{
+        vSelection
+    },
+    data(){
+        return{
+            productType:[
+                {
+                label: '入门版',
+                value: 0
+                },
+                {
+                label: '中级版',
+                value: 1
+                },
+                {
+                label: '高级版',
+                value: 2
+                }
+            ]
+        }
+    }
 }
 </script>
 <style>
