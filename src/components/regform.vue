@@ -96,7 +96,7 @@ export default{
             }else{
                 this.errorText = ''
                 this.regsucin = false
-                this.$http.get('http:/g.cn')
+                this.$http.get('/api')
                 .then(Response=>{
                     this.$emit('reg-hot',Response.data.login)
                 })

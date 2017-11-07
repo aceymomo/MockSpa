@@ -50,7 +50,7 @@ export default{
       slideShow
     },
     created(){
-      this.$http.get('http:/g.cn')
+      this.$http.get('/api')
       .then(Response=>{
         this.newList = Response.data.newList
       })

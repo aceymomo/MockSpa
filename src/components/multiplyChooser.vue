@@ -31,7 +31,10 @@ export default{
                     return idx !== index
                 })
             }
-            this.$emit('on-change',this.nowIndexes)
+            let nowObjArray = _.map(this.nowIndexes,(idx)=>{
+                return this.selections[idx]
+            })
+            this.$emit('on-change',nowObjArray)
         },
         checkActive(index){
             return this.nowIndexes.indexOf(index) !== -1

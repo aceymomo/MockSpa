@@ -35,7 +35,7 @@ export default{
         selecTat(index){
             this.nowIndex = index
             this.isDrop = false
-            this.$emit('on-click',this.nowIndex)
+            this.$emit('on-change',this.selections[this.nowIndex])
         }
     }
 }

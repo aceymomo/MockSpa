@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-export default Mock.mock('http:/g.cn', {
+export default Mock.mock('/api', {
     'newList': [{
             title: '数据统计',
             url: 'http://starcraft.com'
