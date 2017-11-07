@@ -83,6 +83,7 @@ import vSelection from '@/components/selection'
 import vCounter from '@/components/counter'
 import vMultiplyChooser from '@/components/multiplyChooser'
 import vChooser from '@/components/chooser'
+import _ from 'lodash'
 export default{
     components:{
         vSelection,
@@ -144,7 +145,25 @@ export default{
     methods:{
         onParamChange(attr,val){
             this[attr] = val
-            console.log(attr,this[attr])
+            this.getPrice()
+        },
+        getPrice(){
+            let buyVersionsArray = _.map(this.versions,(item)=>{
+                return item.value
+            })
+            let reqParams = {
+                buyNumber : this.buyNum,
+                buyType : this.buyType.value,
+                period : this.period.value,
+                version : buyVersionsArray.join(',')
+            }
+            this.$http.post('/api',reqParams)
+            .then(res=>{
+                console.log(res.data.getPrice)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
         }
     }
 }

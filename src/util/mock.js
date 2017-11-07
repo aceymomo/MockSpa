@@ -22,5 +22,8 @@ export default Mock.mock('/api', {
     'login': {
         'username': 'yundong',
         'userid': 123456
+    },
+    'getPrice': {
+        'amount': 567
     }
 })
