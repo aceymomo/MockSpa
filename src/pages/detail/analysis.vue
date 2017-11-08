@@ -157,9 +157,9 @@ export default{
                 period : this.period.value,
                 version : buyVersionsArray.join(',')
             }
-            this.$http.post('/api',reqParams)
+            this.$http.post('/api/db',reqParams)
             .then(res=>{
-                console.log(res.data.getPrice)
+                console.log(res)
             })
             .catch(error=>{
                 console.log(error)
