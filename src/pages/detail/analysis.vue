@@ -42,13 +42,13 @@
                   总价：
               </div>
               <div class="sales-board-line-right">
-                  10元
+                  {{price}}元
               </div>
           </div>
           <div class="sales-board-line">
               <div class="sales-board-line-left">&nbsp;</div>
               <div class="sales-board-line-right">
-                  <div class="button">
+                  <div class="button" @click="isShowPay">
                     立即购买
                   </div>
               </div>
@@ -76,6 +76,26 @@
           <li>用户所在地理区域分布状况等</li>
         </ul>
       </div>
+      <my-dialog :is-show="isShowPays" @on-close="onClosePay">
+          <table class="buy-dialog-table">
+              <tr>
+                  <th>购买数量</th>
+                  <th>产品类型</th>
+                  <th>有效时间</th>
+                  <th>产品版本</th>
+                  <th>总价</th>
+              </tr>
+              <tr>
+                  <td>{{buyNum}}</td>
+                  <td>{{buyType.label}}</td>
+                  <td>{{period.label}}</td>
+                  <td>
+                      <span v-for="item in versions">{{item.label}}</span>
+                  </td>
+                  <td>{{price}}</td>
+              </tr>
+          </table>
+      </my-dialog>
   </div>
 </template>
 <script>
@@ -83,13 +103,15 @@ import vSelection from '@/components/selection'
 import vCounter from '@/components/counter'
 import vMultiplyChooser from '@/components/multiplyChooser'
 import vChooser from '@/components/chooser'
+import Dialog from '@/components/dailog'
 import _ from 'lodash'
 export default{
     components:{
         vSelection,
         vCounter,
         vMultiplyChooser,
-        vChooser
+        vChooser,
+        myDialog:Dialog,
     },
     data(){
         return{
@@ -98,6 +120,7 @@ export default{
             versions:[],
             period:{},
             price:0,
+            isShowPays:false,
             productType:[
                 {
                 label: '入门版',
@@ -159,15 +182,49 @@ export default{
             }
             this.$http.post('/api/getPrice',reqParams)
             .then(res=>{
-                console.log(res)
+                this.price = res.data.amount
             })
             .catch(error=>{
                 console.log(error)
             })
+        },
+        isShowPay(){
+            this.isShowPays = true
+        },
+        onClosePay(){
+            this.isShowPays = false
         }
+    },
+    mounted(){
+        this.buyNum = 1,
+        this.buyType = this.buyType[0],
+        this.versions = [this.versionList[0]],
+        this.period = this.periodList[0],
+        this.getPrice()
     }
 }
 </script>
-<style>
-
+<style scoped>
+.buy-dialog-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.buy-dialog-btn {
+  margin-top: 20px;
+}
+.buy-dialog-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.buy-dialog-table td,
+.buy-dialog-table th{
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  padding: 5px 0;
+}
+.buy-dialog-table th {
+  background: #4fc08d;
+  color: #fff;
+  border: 1px solid #4fc08d;
+}
 </style>

@@ -79,9 +79,9 @@ export default{
                 this.errorText = '您的注册项目未通过!'
             }else{
                 this.errorText = ''
-                this.$http.get('/api')
+                this.$http.get('/api/login')
                 .then(Response=>{
-                    this.$emit('has-log',Response.data.login)
+                    this.$emit('has-log',Response.data)
                 })
                 .catch(error=>{
                     console.log(error)

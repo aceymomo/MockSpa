@@ -43,16 +43,15 @@
   </div>
 </template>
 <script>
-import data from '@/util/mock'
 import slideShow from '@/components/slideShow'
 export default{
     components:{
       slideShow
     },
     created(){
-      this.$http.get('/api')
+      this.$http.get('/api/newList')
       .then(Response=>{
-        this.newList = Response.data.newList
+        this.newList = Response.data
       })
       .catch(error=>{
         console.log(error)
