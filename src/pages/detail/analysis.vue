@@ -95,6 +95,11 @@
                   <td>{{price}}</td>
               </tr>
           </table>
+          <h3 class="buy-dialog-title">请选择银行</h3>
+          <bank-choose></bank-choose>
+          <div class="button buy-dialog-btn">
+              确认购买
+          </div>
       </my-dialog>
   </div>
 </template>
@@ -104,6 +109,7 @@ import vCounter from '@/components/counter'
 import vMultiplyChooser from '@/components/multiplyChooser'
 import vChooser from '@/components/chooser'
 import Dialog from '@/components/dailog'
+import bankChoose from '@/components/bankChoose'
 import _ from 'lodash'
 export default{
     components:{
@@ -112,6 +118,7 @@ export default{
         vMultiplyChooser,
         vChooser,
         myDialog:Dialog,
+        bankChoose,
     },
     data(){
         return{
@@ -197,7 +204,7 @@ export default{
     },
     mounted(){
         this.buyNum = 1,
-        this.buyType = this.buyType[0],
+        this.buyType = this.productType[0],
         this.versions = [this.versionList[0]],
         this.period = this.periodList[0],
         this.getPrice()
