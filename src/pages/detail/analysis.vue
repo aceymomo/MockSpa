@@ -101,8 +101,8 @@
               确认购买
           </div>
       </my-dialog>
-      <my-dialog :is-show="isShowErrDialog">支付失败!</my-dialog>
-      <check-order :is-show-check-dialog="isShowCheckOrder"></check-order>
+      <my-dialog :is-show="isShowErrDialog" @on-close="hideErrDialog">支付失败!</my-dialog>
+      <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideCheckOrder"></check-order>
   </div>
 </template>
 <script>
@@ -211,6 +211,12 @@ export default{
         onChangeBanks(bankObj){
             this.bankId = bankObj.id
         },
+        hideErrDialog(){
+            this.isShowErrDialog = false
+        },
+        hideCheckOrder(){
+            this.isShowCheckOrder = false
+        },
         payFiym(){
             let buyVersionsArray = _.map(this.versions,(item)=>{
                 return item.value
@@ -229,7 +235,8 @@ export default{
                 this.isShowPays = false
             })
             .catch(error=>{
-                console.log(error)
+                this.isShowBuyDialog = false
+                this.isShowErrDialog = true
             })
         }
     },
