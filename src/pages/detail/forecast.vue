@@ -84,7 +84,7 @@ export default{
     },
     components:{
         vMultiplyChooser,
-        vCounter
+        vCounter,
     }
 }
 </script>

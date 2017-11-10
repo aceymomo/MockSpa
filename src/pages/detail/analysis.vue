@@ -96,11 +96,13 @@
               </tr>
           </table>
           <h3 class="buy-dialog-title">请选择银行</h3>
-          <bank-choose></bank-choose>
-          <div class="button buy-dialog-btn">
+          <bank-choose @on-change="onChangeBanks"></bank-choose>
+          <div class="button buy-dialog-btn" @click="payFiym">
               确认购买
           </div>
       </my-dialog>
+      <my-dialog :is-show="isShowErrDialog">支付失败!</my-dialog>
+      <check-order :is-show-check-dialog="isShowCheckOrder"></check-order>
   </div>
 </template>
 <script>
@@ -110,6 +112,7 @@ import vMultiplyChooser from '@/components/multiplyChooser'
 import vChooser from '@/components/chooser'
 import Dialog from '@/components/dailog'
 import bankChoose from '@/components/bankChoose'
+import checkOrder from '@/components/checkOrder'
 import _ from 'lodash'
 export default{
     components:{
@@ -119,6 +122,7 @@ export default{
         vChooser,
         myDialog:Dialog,
         bankChoose,
+        checkOrder
     },
     data(){
         return{
@@ -170,6 +174,9 @@ export default{
                 value: 2
                 }
             ],
+            bankId:null,
+            isShowCheckOrder: false,
+            isShowErrDialog:false
         }
     },
     methods:{
@@ -200,6 +207,30 @@ export default{
         },
         onClosePay(){
             this.isShowPays = false
+        },
+        onChangeBanks(bankObj){
+            this.bankId = bankObj.id
+        },
+        payFiym(){
+            let buyVersionsArray = _.map(this.versions,(item)=>{
+                return item.value
+            })
+            let reqParams = {
+                buyNumber : this.buyNum,
+                buyType : this.buyType.value,
+                period : this.period.value,
+                version : buyVersionsArray.join(','),
+                bankId : this.bankId
+            }
+            this.$http.post('/api/createOrder',reqParams)
+            .then(res=>{
+                this.orderId = res.data.orderId
+                this.isShowCheckOrder = true
+                this.isShowPays = false
+            })
+            .catch(error=>{
+                console.log(error)
+            })
         }
     },
     mounted(){
