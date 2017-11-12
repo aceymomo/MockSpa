@@ -12,6 +12,7 @@
   </div>
 </template>
 <script>
+import {eventBus} from '@/eventBus'
 export default{
     data(){
         return{
@@ -29,7 +30,9 @@ export default{
         }
     },
     methods:{
-        selecShow(){
+        selecShow(event){
+            event.stopPropagation()
+            eventBus.$emit('reset-selet')
             this.isDrop = !this.isDrop
         },
         selecTat(index){
@@ -37,6 +40,11 @@ export default{
             this.isDrop = false
             this.$emit('on-change',this.selections[this.nowIndex])
         }
+    },
+    mounted(){
+        eventBus.$on('reset-selet',()=>{
+            this.isDrop = false
+        })
     }
 }
 </script>

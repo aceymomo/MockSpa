@@ -131,6 +131,7 @@ export default{
             versions:[],
             period:{},
             price:0,
+            orderId:'',
             isShowPays:false,
             productType:[
                 {

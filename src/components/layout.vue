@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="resetSelet">
       <div class="app-head">
           <div class="app-head-inner">
               <router-link :to="{path:'/'}">
@@ -40,6 +40,7 @@
   </div>
 </template>
 <script>
+import {eventBus} from '@/eventBus'
 import Dialog from '@/components/dailog'
 import logForm from '@/components/logform'
 import regForm from '@/components/regform'
@@ -81,6 +82,9 @@ export default{
                 this.username = data.username
                 this.$router.push({path:'/'})
             },5000)
+        },
+        resetSelet(){
+            eventBus.$emit('reset-selet')
         },
         logclose(){
             this.username = ''

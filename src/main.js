@@ -7,6 +7,7 @@ import Layout from '@/components/layout'
 import Axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import store from './store'
 
 Vue.prototype.$http = Axios
 Vue.config.productionTip = false
@@ -17,6 +18,7 @@ Vue.use(ElementUI)
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<Layout/>',
     components: { Layout }
 })
