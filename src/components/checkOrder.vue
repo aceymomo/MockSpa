@@ -1,6 +1,6 @@
 <template>
   <div>
-      <this-dialog :is-show="isShowCheckDialog" @on-close="checkStatus">
+      <this-dialog :is-show="isShowCheckDialog" @on-close="toOrderList">
           请检查你的支付状态！
           <el-button type="success" @click="checkStatus">支付成功</el-button>
           <el-button type="danger" @click="checkStatustwo">支付失败</el-button>
@@ -60,7 +60,7 @@ export default{
             })
         },
         toOrderList(){
-            this.$router.push({path:'/'})
+            this.$router.push({path:'/orderList'})
         }
     }
 }

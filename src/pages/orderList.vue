@@ -12,7 +12,8 @@
                 v-model="value8"
                 type="date"
                 placeholder="选择日期"
-                default-value="2010-10-01">
+                default-value="2010-10-01"
+                @change="changeStartData">
                 </el-date-picker>
             </div>
           </div>
@@ -23,19 +24,23 @@
                     v-model="value9"
                     type="date"
                     placeholder="选择日期"
-                    default-value="2010-10-01">
+                    default-value="2010-10-01"
+                    @change="changeEndData">
                     </el-date-picker>
                 </div>
           </div>
           <div class="order-list-option">
               关键词：
-              <input type="text" v-model="query" class="order-query">
+              <input type="text" v-model.lazy="query" class="order-query">
           </div>
       </div>
       <div class="order-list-table">
           <table>
               <tr>
-                  <th></th>
+                  <th v-for="head in tableHeads" @click="changeOrder(head)" :class="{active:head.active}">{{head.label}}</th>
+              </tr>
+              <tr v-for="item in tableList">
+                  <td v-for="head in tableHeads">{{item[head.key]}}</td>
               </tr>
           </table>
       </div>
@@ -43,16 +48,27 @@
 </template>
 <script>
 import vSelection from '@/components/selection'
+import _ from 'lodash'
 export default{
     components:{
         vSelection
+    },
+    watch:{
+        query(){
+            this.getTableData()
+        }
     },
     data(){
         return{
             value8:'',
             value9:'',
             query:'',
+            startData:'',
+            endData:'',
             productId:0,
+            tableList:[],
+            headItem:false,
+            currentOrder:'asc',
             products: [
                 {
                 label: '数据统计',
@@ -71,12 +87,78 @@ export default{
                 value: 3
                 }
             ],
+            tableHeads: [
+                {
+                label: '订单号',
+                key: 'orderId'
+                },
+                {
+                label: '购买产品',
+                key: 'product'
+                },
+                {
+                label: '版本类型',
+                key: 'version'
+                },
+                {
+                label: '有效时间',
+                key: 'period'
+                },
+                {
+                label: '购买日期',
+                key: 'date'
+                },
+                {
+                label: '数量',
+                key: 'buyNum'
+                },
+            ],
         }
     },
     methods:{
         productChange(obj){
             this.productId = obj.value
+            this.getTableData()
+        },
+        changeStartData(data){
+            this.startData = data
+            this.getTableData()
+        },
+        changeEndData(data){
+            this.endData = data
+            this.getTableData()
+        },
+        getTableData(){
+            let reqParam = {
+                query : this.query,
+                startData: this.startData,
+                endData: this.endData,
+                productId : this.productId
+            }
+            this.$http.post('/api/getOrderList',reqParam)
+            .then(res=>{
+                this.tableList = res.data.list
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+        changeOrder(headItem){
+            this.tableHeads.map((item)=>{
+                item.active = false
+                return item
+            })
+            headItem.active = true
+            if(this.currentOrder === 'asc'){
+                this.currentOrder = 'desc'
+            }else if(this.currentOrder === 'desc'){
+                this.currentOrder = 'asc'
+            }
+            this.tableList = _.orderBy(this.tableList,headItem.key,this.currentOrder)
         }
+    },
+    mounted(){
+        this.getTableData()
     }
 }
 </script>
